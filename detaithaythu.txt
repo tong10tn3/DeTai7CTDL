@@ -1,0 +1,460 @@
+#include<iostream>
+using namespace std;
+#include <graphics.h>
+#include<conio.h>
+#define MauNenDoThi 7
+#define MAX 100
+#define mauxanhgiongaokhoaccrush 9
+
+#define mauxanhlachuoi 10
+#define mauxanhlacay 2
+
+#define mauNutThoat 4
+#define mauKhiChamNutThoat 12
+
+struct dinh
+{
+	int x;
+	int y;
+	char name;
+};
+struct canh
+{
+	dinh dau;
+	dinh cuoi;
+	int dodai;
+};
+struct button
+{
+	int xdau;
+	int ydau;
+	int xcuoi;
+	int ycuoi;
+	string content;
+	int mauButton=mauxanhlacay;
+	int BGcolor=2;
+	bool isChangeColor=false;
+	int mauKhiCham=mauxanhlachuoi;
+	int doRongFont=1;
+};
+
+void setGiaoDien();
+void setMatrix();
+void setMenu();
+void setDoThi();
+void setThongTin();
+void xuLiChuot(button a[], button menuChild[][13]);
+void doiMauButton(button a, int color);
+void taoMangButton(button a[]);
+void setButton(button a);
+void drawMenuButton(button a[]);
+void batDkChuot(button &a, int x, int y,button menuChild[][13],button b[]);
+void setUpMenuChild(button menuChild[][13]);
+void xuLi();
+
+int main(int argc, char *argv[])
+{
+	initwindow(1280+8,720+12);
+	setGiaoDien();
+	xuLi();
+	
+	getch();
+	return 0;
+}
+void setThongTin()
+{
+	int xdau=305;	int xcuoi=1120;
+	int ydau=455;	int ycuoi=715;
+	setfillstyle(SOLID_FILL,mauxanhgiongaokhoaccrush);
+	bar(xdau,ydau,xcuoi,ycuoi);
+	setfillstyle(0,MauNenDoThi);
+	rectangle(xdau,ydau,xcuoi,ycuoi);
+	
+}
+void setDoThi()
+{
+	int xdau=305;	int xcuoi=1275;
+	int ydau=5;		int ycuoi=450;
+	rectangle(xdau,ydau,xcuoi,ycuoi);
+}
+void setMatrix()
+{
+	int xdau=5; 	int xcuoi=300;
+	int ydau=400;	int ycuoi=715;
+	setfillstyle(SOLID_FILL,mauxanhgiongaokhoaccrush);
+	bar(xdau,ydau,xcuoi,ycuoi);
+	setfillstyle(0,MauNenDoThi);
+	rectangle(xdau,ydau,xcuoi,ycuoi);
+
+	line(xdau,ydau+50,xcuoi,ydau+50);
+	int xgiua=(xdau+xcuoi)/2;
+	int ygiua=(ydau+ydau+50)/2;
+	char *s=new char[8];
+	s="MA TRAN";
+	setbkcolor(mauxanhgiongaokhoaccrush);
+	settextstyle(DEFAULT_FONT,0, 2);
+	outtextxy(xgiua-8-3*16,ygiua-8,s);
+	delete s;
+
+}
+void setMenu()
+{
+	int xdau=5;		int xcuoi=300;
+	int ydau=5;		int ycuoi=395;
+	setfillstyle(SOLID_FILL,mauxanhgiongaokhoaccrush);
+	bar(xdau,ydau,xcuoi,ycuoi);
+	setfillstyle(0,MauNenDoThi);
+	rectangle(xdau,ydau,xcuoi,ycuoi);
+}
+void setGiaoDien()
+{
+	setfillstyle(SOLID_FILL,MauNenDoThi);
+	bar(0, 0, 1280, 720);
+	
+	setMatrix();
+	setMenu();
+	setDoThi();
+	setThongTin();
+
+
+}
+void xuLi()
+{
+	button a[11];
+	taoMangButton(a);
+	button menuChild[4][13];
+	
+	setUpMenuChild(menuChild);
+	drawMenuButton(a);
+	xuLiChuot(a, menuChild);
+	
+	
+}
+
+void xuLiChuot(button a[], button menuChild[][13])
+{
+	int x,y;
+	while(true)
+	{
+		delay(1);
+		getmouseclick(WM_MOUSEMOVE,x,y);
+		for(int i=0;i<=6;i++)
+		{
+			batDkChuot(a[i],x,y,menuChild, a);
+		}
+	}
+	
+}
+
+void batDkChuot(button &a,int x,int y, button menuChild[][13],button b[])
+{
+	if(x>=a.xdau&&x<=a.xcuoi&&y>=a.ydau&&y<=a.ycuoi&&a.isChangeColor==false&&x!=-1&&y!=-1)
+	{
+		doiMauButton(a,a.mauKhiCham);
+		a.isChangeColor=true;
+		if(a.content=="DINH")
+		{
+			setMenu();
+			doiMauButton(b[7],b[7].mauKhiCham);
+			setButton(b[8]);
+			setButton(b[9]);
+			setButton(b[10]);
+			for(int i=0;i<=4;i++)
+			{
+				setButton(menuChild[0][i]);
+			}
+			line(152,27,152,373);
+		}
+		else if(a.content=="CANH")
+		{
+			setMenu();
+			doiMauButton(b[8],b[8].mauKhiCham);
+			setButton(b[0]);
+			setButton(b[9]);
+			setButton(b[10]);
+			for(int i=0;i<=3;i++)
+			{
+				setButton(menuChild[1][i]);
+			}
+			line(152,119,152,373);
+		}
+		else if(a.content=="THUAT TOAN")
+		{
+			
+		}
+		else if(a.content=="TEP")
+		{
+			setMenu();
+			setButton(b[0]);
+			setButton(b[1]);
+			setButton(b[2]);
+			doiMauButton(b[10],b[10].mauKhiCham);
+			for(int i=0;i<=1;i++)
+			{
+				setButton(menuChild[3][i]);
+			}
+			line(152,303,152,373);
+		}	
+	}
+	else if(a.isChangeColor==true&&(x>=a.xdau&&x<=a.xcuoi&&y>=a.ydau&&y<=a.ycuoi)==false&&x!=-1&&y!=-1)//neu khong co su kien thi getmousclick tra ve x=-1, y=-1
+	{
+		setMenu();
+		drawMenuButton(b);	
+		setButton(a);
+		a.isChangeColor=false;
+	}
+}
+void doiMauButton(button a, int color)
+{
+	setfillstyle(SOLID_FILL,color);
+	bar(a.xdau,a.ydau,a.xcuoi,a.ycuoi);
+	rectangle(a.xdau,a.ydau,a.xcuoi,a.ycuoi);
+	
+	int xgiua=(a.xdau+a.xcuoi)/2;
+	int ygiua=(a.ydau+a.ycuoi)/2;
+	setbkcolor(color);
+	settextstyle(DEFAULT_FONT,0, a.doRongFont);
+	
+	char*s=new char [a.content.length()+1];
+	for(int i=0;i<a.content.length();i++)
+	{
+		s[i]=a.content[i];
+	}
+	s[a.content.length()]='\0';
+	int denta=a.content.length()/2;
+	outtextxy(xgiua-a.doRongFont*4-denta*a.doRongFont*8,ygiua-a.doRongFont*4,s);
+	delete s; 
+	
+}
+void taoMangButton(button a[])
+{
+	a[0].xdau=25;		a[0].ydau=27;
+	a[0].xcuoi=280;		a[0].ycuoi=97;
+	a[0].content="DINH";
+	
+	a[1].xdau=25;		a[1].ydau=119;
+	a[1].xcuoi=280;		a[1].ycuoi=189;
+	a[1].content="CANH";
+	
+	a[2].xdau=25;		a[2].ydau=211;
+	a[2].xcuoi=280;		a[2].ycuoi=281;
+	a[2].content="THUAT TOAN";
+	
+	a[3].xdau=25;		a[3].ydau=303;
+	a[3].xcuoi=280;		a[3].ycuoi=373;
+	a[3].content="TEP";
+	
+	a[0].mauButton=a[1].mauButton=a[2].mauButton=a[3].mauButton= mauxanhlacay;
+	a[0].BGcolor=a[1].BGcolor=a[2].BGcolor=a[3].BGcolor=mauxanhlacay;
+
+	
+	a[4].xdau=1125;		a[4].ydau=455;
+	a[4].xcuoi=1275;	a[4].ycuoi=539;
+	a[4].content="XOA HET";
+	a[4].mauButton=mauxanhlacay;
+	
+	a[5].xdau=1125;		a[5].ydau=544;
+	a[5].xcuoi=1275;	a[5].ycuoi=627;
+	a[5].content="LUU";
+	a[5].mauButton=mauxanhlacay;
+	
+	a[0].mauKhiCham=a[1].mauKhiCham=a[2].mauKhiCham=a[3].mauKhiCham=a[4].mauKhiCham=a[5].mauKhiCham= mauxanhlachuoi;
+	
+	a[6].xdau=1125;		a[6].ydau=632;
+	a[6].xcuoi=1275;	a[6].ycuoi=715;
+	a[6].content="THOAT";
+	a[6].mauButton=mauNutThoat;
+	a[6].BGcolor=mauNutThoat;
+	a[6].mauKhiCham=mauKhiChamNutThoat;
+	
+	
+	for(int i=0;i<=6;i++)
+	{
+		a[i].doRongFont=2;
+	}
+	//set nut khi cham
+	a[7].xdau=25;		a[7].ydau=27;
+	a[7].xcuoi=151;		a[7].ycuoi=97;
+	a[7].content="Dinh";
+	a[7].doRongFont=2;
+	a[7].mauButton=mauxanhlacay;
+	a[7].BGcolor=mauxanhlacay;
+	a[7].mauKhiCham=mauxanhlachuoi;
+	
+	a[8].xdau=25;		a[8].ydau=119;
+	a[8].xcuoi=151;		a[8].ycuoi=189;
+	a[8].content="Canh";
+	a[8].doRongFont=2;
+	a[8].mauButton=mauxanhlacay;
+	a[8].BGcolor=mauxanhlacay;
+	a[8].mauKhiCham=mauxanhlachuoi;
+	
+	
+	a[9].xdau=25;		a[9].ydau=211;
+	a[9].xcuoi=151;		a[9].ycuoi=281;
+	a[9].content="T.T";
+	a[9].doRongFont=2;
+	a[9].mauButton=mauxanhlacay;
+	a[9].BGcolor=mauxanhlacay;
+	a[9].mauKhiCham=mauxanhlachuoi;
+	
+	a[10].xdau=25;		a[10].ydau=303;
+	a[10].xcuoi=151;	a[10].ycuoi=373;
+	a[10].content="Tep";
+	a[10].doRongFont=2;
+	a[10].mauButton=mauxanhlacay;
+	a[10].BGcolor=mauxanhlacay;
+	a[10].mauKhiCham=mauxanhlachuoi;
+	
+
+	
+
+	
+}
+void setButton(button a)
+{
+	setfillstyle(SOLID_FILL,a.mauButton);
+	bar(a.xdau,a.ydau,a.xcuoi,a.ycuoi);
+	setfillstyle(SOLID_FILL,MauNenDoThi);
+	rectangle(a.xdau,a.ydau,a.xcuoi,a.ycuoi);
+	
+	int xgiua=(a.xdau+a.xcuoi)/2;
+	int ygiua=(a.ydau+a.ycuoi)/2;
+	setbkcolor(a.BGcolor);
+	settextstyle(DEFAULT_FONT,0, a.doRongFont);
+	//chuyen string thanh char*
+	char*s=new char [a.content.length()+1];
+	for(int i=0;i<a.content.length();i++)
+	{
+		s[i]=a.content[i];
+	}
+	s[a.content.length()]='\0';
+	int denta=a.content.length()/2;
+	//
+	outtextxy(xgiua-a.doRongFont*4-denta*a.doRongFont*8,ygiua-a.doRongFont*4,s);
+	delete s;
+}
+void drawMenuButton(button a[])/// jhufgcvyfvyh
+{
+	for(int i=0;i<7;i++)
+	{
+		setButton(a[i]);
+	}
+}
+void setUpMenuChild(button menuChild[][13])
+{
+	
+	menuChild[0][0].content="TAO DINH";
+	menuChild[0][1].content="SUA DINH";
+	menuChild[0][2].content="XOA DINH";
+	menuChild[0][3].content="DI CHUYEN";
+	menuChild[0][4].content="HUONG DAN";
+	
+	menuChild[0][0].xdau=153;menuChild[0][0].ydau=27;
+	menuChild[0][0].xcuoi=279;menuChild[0][0].ycuoi=97;
+	
+	menuChild[0][1].xdau=153;menuChild[0][1].ydau=98;
+	menuChild[0][1].xcuoi=279;menuChild[0][1].ycuoi=166;
+	
+	menuChild[0][2].xdau=153;menuChild[0][2].ydau=167;
+	menuChild[0][2].xcuoi=279;menuChild[0][2].ycuoi=235;
+	
+	menuChild[0][3].xdau=153;menuChild[0][3].ydau=236;
+	menuChild[0][3].xcuoi=279;menuChild[0][3].ycuoi=304;
+	
+	menuChild[0][4].xdau=153;menuChild[0][4].ydau=305;
+	menuChild[0][4].xcuoi=279;menuChild[0][4].ycuoi=373;
+	
+	
+	//=============================================//
+	
+	menuChild[1][0].content="TAO CANH";
+	menuChild[1][1].content="SUA TS";
+	menuChild[1][2].content="XOA CANH";
+	menuChild[1][3].content="HUONG DAN";
+	
+	menuChild[1][0].xdau=153;menuChild[1][0].ydau=119;
+	menuChild[1][0].xcuoi=280;menuChild[1][0].ycuoi=183;
+	
+	menuChild[1][1].xdau=153;menuChild[1][1].ydau=184;
+	menuChild[1][1].xcuoi=280;menuChild[1][1].ycuoi=246;
+	
+	menuChild[1][2].xdau=153;menuChild[1][2].ydau=247;
+	menuChild[1][2].xcuoi=280;menuChild[1][2].ycuoi=309;
+	
+	menuChild[1][3].xdau=153;menuChild[1][3].ydau=310;
+	menuChild[1][3].xcuoi=280;menuChild[1][3].ycuoi=373;
+	//==============================================//
+	
+	
+	menuChild[2][0].content="DFS";
+	menuChild[2][1].content="BFS";
+	menuChild[2][2].content="X->Y";
+	menuChild[2][3].content="DINH TRU";
+	menuChild[2][4].content="DINH THAT";
+	menuChild[2][5].content="CANH CAU";
+	menuChild[2][6].content="HAMILTON";
+	menuChild[2][7].content="EULER";
+	menuChild[2][8].content="TOPPO";
+	menuChild[2][9].content="TPLT";
+	menuChild[2][10].content="HUONG DAN";
+	menuChild[2][11].content="TRO LAI";
+	
+	
+	menuChild[2][0].xdau=20;menuChild[2][0].ydau=20;
+	menuChild[2][0].xcuoi=99;menuChild[2][0].ycuoi=98;
+	
+	menuChild[2][1].xdau=114;menuChild[2][1].ydau=20;
+	menuChild[2][1].xcuoi=192;menuChild[2][1].ycuoi=98;
+	
+	menuChild[2][2].xdau=207;menuChild[2][2].ydau=20;
+	menuChild[2][2].xcuoi=285;menuChild[2][2].ycuoi=98;
+	
+	menuChild[2][3].xdau=20;menuChild[2][3].ydau=114;
+	menuChild[2][3].xcuoi=99;menuChild[2][3].ycuoi=192;
+	
+	menuChild[2][4].xdau=114;menuChild[2][4].ydau=114;
+	menuChild[2][4].xcuoi=192;menuChild[2][4].ycuoi=192;
+	
+	menuChild[2][5].xdau=207;menuChild[2][5].ydau=114;
+	menuChild[2][5].xcuoi=285;menuChild[2][5].ycuoi=192;
+	
+	
+	menuChild[2][6].xdau=20;menuChild[2][6].ydau=207;
+	menuChild[2][6].xcuoi=99;menuChild[2][6].ycuoi=285;
+	
+	menuChild[2][7].xdau=114;menuChild[2][7].ydau=207;
+	menuChild[2][7].xcuoi=192;menuChild[2][7].ycuoi=285;
+	
+	menuChild[2][8].xdau=207;menuChild[2][8].ydau=207;
+	menuChild[2][8].xcuoi=285;menuChild[2][8].ycuoi=285;
+	
+	menuChild[2][9].xdau=20;menuChild[2][9].ydau=300;
+	menuChild[2][9].xcuoi=99;menuChild[2][9].ycuoi=378;
+	
+	menuChild[2][10].xdau=114;menuChild[2][10].ydau=300;
+	menuChild[2][10].xcuoi=192;menuChild[2][10].ycuoi=378;
+	
+	menuChild[2][11].xdau=207;menuChild[2][11].ydau=300;
+	menuChild[2][11].xcuoi=285;menuChild[2][11].ycuoi=378;
+	
+	//==============================================//
+	
+	menuChild[3][0].content="LUU TEP"; 
+	menuChild[3][1].content="MO TEP";
+
+	
+	menuChild[3][0].xdau=153;menuChild[3][0].ydau=303;
+	menuChild[3][0].xcuoi=280;menuChild[3][0].ycuoi=338;
+	
+	menuChild[3][1].xdau=153;menuChild[3][1].ydau=339;
+	menuChild[3][1].xcuoi=280;menuChild[3][1].ycuoi=373;
+	
+
+	
+	//===================================================//
+	
+	
+}
+
+

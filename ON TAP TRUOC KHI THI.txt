@@ -1,0 +1,74 @@
+data segment: lưu biến toàn cục
+stack: lưu biến cục bộ
+heap segment : lưu biến con tro, cấp phát động
+
+mảng tuyến tính
+Nhận xét : Danh sách đặc dùng phương pháp truy xuất trực tiếp nên thời gian truy xuất nhanh, nhưng hiệu quả sử dụng bộ nhớ thấp. Danh sách đặc không phù hợp với phép thêm vào và loại bỏ vì mỗi lần thêm vào và loại bỏ thì chúng ta phải đổi chỗ nhiều lần. Đặc biệt trường hợp xấu nhất là khi thêm vào và loại bỏ ở đầu danh sách
+Kết luận : Danh sách đặc không nên sử dụng cho các danh sách hay bị biến động. Còn đối với những danh sách thường bị biến động thì người ta chọn cấu trúc là danh sách liên kết.
+
+DSLK 
+- Danh sách liên kết rất thích hợp khi thực hiện các phép toán trên danh sách thường bị biến động. Trong trường hợp xóa hay thêm phần tử trong danh sách liên kết thì ta không dời các phần tử đi như trong danh sách tuyến tính (mảng) mà chỉ việc hiệu chỉnh lại trường next tại các nút đang thao tác. Thời gian thực hiện các phép toán thêm vào và loại bỏ không phụ thuộc vào số phần tử của danh sách liên kết. 
+- Tuy nhiên, danh sách liên kết cũng có các điểm hạn chế sau:
+	+ Vì mỗi nút của danh sách liên kết phải chứa thêm trường next nên danh sách liên kết phải tốn thêm bộ nhớ.
+	+ Tìm kiếm trên danh sách liên kết không nhanh vì ta chỉ được truy xuất tuần tự từ đầu danh sách.
+
+ Khai báo : Một phần tử của danh sách liên kết ít nhất phải có hai thành phần : nội dung của phần tử (info) và thành phần next để liên kết phần tử này với phần tử khác. 
+
+các câu hỏi thầy có thể hỏi
+-so sánh giữa mảng con trỏ với mảng tĩnh , mảng động
+
+
+
+
+-ưu nhược điểm của dstt, dslk.
+-nhận diện các kiểu cấu trúc có cùng cách thiết lập cấu trúc
+-câu hỏi sắp xếp: cho dữ liệu 10.000 sinh viên(nhưng không thể đưa hết dữ liệu vào bộ nhớ) dùng thuật toán quick sort để sắp xếp
+
+
+
+dstt 
+ưu:	truy xuất tới các phần tử nhanh gọn dựa vào chỉ số=> thời gian truy xuất nhanh
+nhược:	kích thước được cấp phát ban đầu  =>sử dụng có thể gay lãng phí bộ nhớ=> hiệu quả sử dụng bộ nhớ thấp
+	các phần tử trong dstt  nằm liên tiếp nhau trong bộ nhớ, không có khoảng trống ở giữa
+		=>không phù hợp với các phép thêm và loại bỏ
+=> không nên dùng cho các danh sách bị biến động
+
+cấp phát tĩnh: cấp phát ngay lúc khai báo
+cấp phát động:  tiết kiệm bộ nhớ hơn
+		cơ chế cấp phát vùng nhớ diễn ra trong quá trình chương trình đang chạy
+		cấp phát mà quên giải phóng thì toang
+cấp phát mảng con trỏ:sv *a[10]
+
+Ưu điểm mảng con trỏ: 
+Vùng chứa dữ liệu có thể nằm rải rác trong bộ nhớ
+Có thể thu hồi từng vùng nhớ ->tiết kiệm bộ nhớ
+phù hợp trong trường họp lưu struct với số byte khá lớn
+khá tiết kiệm
+
+
+DSLK Đơn
+ưu: 
+	không cần khai báo trước, cấp phát và giải phóng trong quá trình đang thực thi, không dư như bên dstt=> tiết kiệm bộ nhớ	
+	thích hợp cho thêm , xóa cực nhanh, không quan tâm số lượng phần tử
+	các vùng nhớ rời rạc, liên kết với nhau bởi cái node
+
+nhược: 	duyệt từ đầu đến cuối mới có thể truy xuất, không thể truy xuất trực tiếp như bên dstt
+
+
+CHÍNH
+DSTT: ưu : truy xuất nhanh vì truy xuất trực tiếp thông qua chỉ số
+	nhược: hiệu quả sử dụng bộ nhớ thấp (vì kích thước được cấp phát ban đầu, sử dụng có thể dư gây lãng phí bộ nhớ)
+		không phù hợp với các phép thêm và xóa
+DSLK: ưu: tiết kiệm bộ nhớ, có thể cấp phát và giải phóng trong khi chương trình đang thực thi
+	thích hợp cho việc thêm và xóa dễ dàng, nhanh chóng
+nhược: truy xuất tới phần tự phải duyệt tuần tự
+
+cây nhị phân: cây nhị phân là 1 cấu trúc dữ liệu dạng cây, mỗi nút sẽ có 2 nút con, các nút  bên cây con trái sẽ có khóa nhỏ hơn nút gốc, các nút bên cây con  hải sẽ có khóa lớn hơn nút gốc
+
+
+
+
+	
+
+
+
